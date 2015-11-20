@@ -2,6 +2,7 @@ package br.com.thiago.twittersearchtest.Adapter;
 
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,8 @@ public class ListTweetsAdapter extends RecyclerView.Adapter<ListTweetsAdapter.In
 
     @Override
     public InnerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        Log.i("LOG","onCreateViewHolder: " + tweets.size() );
+
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_tweets, parent, false);
 
         InnerViewHolder myViewHolder = new InnerViewHolder(v);
@@ -46,7 +49,7 @@ public class ListTweetsAdapter extends RecyclerView.Adapter<ListTweetsAdapter.In
 
     @Override
     public int getItemCount() {
-        return 0;
+        return tweets.size();
     }
 
     public class InnerViewHolder extends RecyclerView.ViewHolder {

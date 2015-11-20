@@ -3,6 +3,7 @@ package br.com.thiago.twittersearchtest.Utils;
 import android.content.Context;
 import android.util.Log;
 
+import com.crashlytics.android.Crashlytics;
 import com.twitter.sdk.android.Twitter;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
 import com.twitter.sdk.android.core.TwitterSession;
@@ -22,12 +23,12 @@ public class TwitterUtils {
 
         TwitterAuthConfig authConfig = new TwitterAuthConfig(TwitterUtils.TWITTER_KEY, TwitterUtils.TWITTER_SECRET);
 
-        Log.i("LOG","Inicializando o Fabricn ... authConfig.getConsumerKey()" + authConfig.getConsumerKey());
-        Log.i("LOG", "Inicializando o Fabricn ... authConfig.getConsumerSecret()" + authConfig.getConsumerSecret());
-        Log.i("LOG", "Inicializando o Fabricn ... authConfig.getRequestCode()" + authConfig.getRequestCode());
+        Log.i("LOG","Inicializando o Fabric ... authConfig.getConsumerKey()" + authConfig.getConsumerKey());
+        Log.i("LOG", "Inicializando o Fabric ... authConfig.getConsumerSecret()" + authConfig.getConsumerSecret());
+        Log.i("LOG", "Inicializando o Fabric ... authConfig.getRequestCode()" + authConfig.getRequestCode());
 
         Fabric.with(ctx, new Twitter(authConfig));
-
+        Fabric.with(ctx, new Crashlytics());
     }
 
     public static TwitterSession getSession(){

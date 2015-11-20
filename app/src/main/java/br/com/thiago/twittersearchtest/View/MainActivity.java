@@ -20,6 +20,9 @@ import com.twitter.sdk.android.core.TwitterApiClient;
 import com.twitter.sdk.android.core.TwitterCore;
 import com.twitter.sdk.android.core.TwitterException;
 import com.twitter.sdk.android.core.models.Search;
+import com.twitter.sdk.android.core.models.Tweet;
+
+import java.util.List;
 
 import br.com.thiago.twittersearchtest.Adapter.ListTweetsAdapter;
 import br.com.thiago.twittersearchtest.R;
@@ -30,22 +33,22 @@ public class MainActivity extends AppCompatActivity {
 
     private EditText editTextSearch;
     private RecyclerView recyclerViewRoot;
+    private ListTweetsAdapter listTweetsAdapter;
+    private static List<Tweet> tweets;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.i("LOG", "onCreate()");
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         super.onCreate(savedInstanceState);
-
         Fresco.initialize(this);
-
         TwitterUtils.autentication(this);
-
         setContentView(R.layout.activity_main);
-
         init();
     }
 
     private void init() {
+        Log.i("LOG", "init()");
         editTextSearch = (EditText) findViewById(R.id.et_Search);
 
         recyclerViewRoot = (RecyclerView) findViewById(R.id.rv_Root);
@@ -65,13 +68,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void searchTweets(String search) {
-        Log.i("LOG", "Texto da pesquisa: " + search);
+        Log.i("LOG", "searchTweets: "+ search);
 
         TwitterApiClient twitterApiClient =  TwitterCore.getInstance().getApiClient(TwitterUtils.getSession());
-        twitterApiClient.getSearchService().tweets( search, null, null, null, null, 50, null, null, null, true, new Callback<Search>() {
+        twitterApiClient.getSearchService().tweets( search , null, null, null, null, 25, null, null, null, true, new Callback<Search>() {
             @Override
             public void success(Result<Search> result) {
-                ListTweetsAdapter listTweetsAdapter = new ListTweetsAdapter(result.data.tweets);
+                Log.i("LOG", "success");
+                tweets = result.data.tweets;
+                listTweetsAdapter = new ListTweetsAdapter(tweets);
                 recyclerViewRoot.setAdapter(listTweetsAdapter);
                 listTweetsAdapter.notifyDataSetChanged();
                 Log.i("LOG", "Resultados da pesquisa: " + result.data.tweets.size());

@@ -18,4 +18,5 @@ public class TextUtils {
     public static void setButtonFont(Context ctx,Button btnView, String font){
         btnView.setTypeface(Typeface.createFromAsset(ctx.getAssets(), font));
     }
+
 }
