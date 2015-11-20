@@ -1,25 +1,87 @@
 package br.com.thiago.twittersearchtest.View;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.twitter.sdk.android.core.Callback;
+import com.twitter.sdk.android.core.Result;
+import com.twitter.sdk.android.core.TwitterApiClient;
+import com.twitter.sdk.android.core.TwitterCore;
+import com.twitter.sdk.android.core.TwitterException;
+import com.twitter.sdk.android.core.models.Search;
+
+import br.com.thiago.twittersearchtest.Adapter.ListTweetsAdapter;
 import br.com.thiago.twittersearchtest.R;
+import br.com.thiago.twittersearchtest.Utils.TextUtils;
+import br.com.thiago.twittersearchtest.Utils.TwitterUtils;
 
 public class MainActivity extends AppCompatActivity {
 
+    private EditText editTextSearch;
+    private RecyclerView recyclerViewRoot;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         super.onCreate(savedInstanceState);
+
+        Fresco.initialize(this);
+
+        TwitterUtils.autentication(this);
+
         setContentView(R.layout.activity_main);
 
+        init();
+    }
 
+    private void init() {
+        editTextSearch = (EditText) findViewById(R.id.et_Search);
 
+        recyclerViewRoot = (RecyclerView) findViewById(R.id.rv_Root);
+        recyclerViewRoot.setLayoutManager(new LinearLayoutManager(this));
+
+        TextView txtSearchMsg = (TextView) findViewById(R.id.txtSearchMsg);
+        TextUtils.setFont(this, txtSearchMsg, TextUtils.CUTE_CARTOON);
+
+        Button btnSearch = (Button) findViewById(R.id.btnSearch);
+        TextUtils.setButtonFont(this, btnSearch, TextUtils.CUTE_CARTOON);
+        btnSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchTweets(editTextSearch.getText().toString());
+            }
+        });
+    }
+
+    public void searchTweets(String search) {
+        Log.i("LOG", "Texto da pesquisa: " + search);
+
+        TwitterApiClient twitterApiClient =  TwitterCore.getInstance().getApiClient(TwitterUtils.getSession());
+        twitterApiClient.getSearchService().tweets( search, null, null, null, null, 50, null, null, null, true, new Callback<Search>() {
+            @Override
+            public void success(Result<Search> result) {
+                ListTweetsAdapter listTweetsAdapter = new ListTweetsAdapter(result.data.tweets);
+                recyclerViewRoot.setAdapter(listTweetsAdapter);
+                listTweetsAdapter.notifyDataSetChanged();
+                Log.i("LOG", "Resultados da pesquisa: " + result.data.tweets.size());
+            }
+
+            @Override
+            public void failure(TwitterException exception) {
+
+            }
+        });
     }
 
     @Override

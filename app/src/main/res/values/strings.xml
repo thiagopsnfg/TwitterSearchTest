@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Busca Twitters</string>
-    <string name="action_settings">Settings</string>
-    <string name="title_activity_home">HomeActivity</string>
+    <string name="app_name">Buscar Tweets</string>
+    <string name="search_msg">Digite a busca</string>
+    <string name="btn_search">Buscar</string>
 </resources>
