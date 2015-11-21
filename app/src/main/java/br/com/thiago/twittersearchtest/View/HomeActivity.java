@@ -7,7 +7,6 @@ import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.crashlytics.android.Crashlytics;
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.Result;
 import com.twitter.sdk.android.core.TwitterException;
@@ -18,7 +17,6 @@ import br.com.thiago.twittersearchtest.Utils.HTTPUtils;
 import br.com.thiago.twittersearchtest.R;
 import br.com.thiago.twittersearchtest.Utils.TextUtils;
 import br.com.thiago.twittersearchtest.Utils.TwitterUtils;
-import io.fabric.sdk.android.Fabric;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -29,23 +27,22 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         TwitterUtils.autentication(this);
         setContentView(R.layout.activity_home);
-        setUpViews();
+        init();
     }
 
-    private void setUpViews() {
-        setUpTwitterButton();
-        setUpTxtFonts();
-    }
+    private void init() {
+        //Set Welcome.
+        Log.i("LOG", "init()");
 
-    private void setUpTxtFonts() {
         TextView txtHomeApp = (TextView) findViewById(R.id.txtHomeApp);
-        TextUtils.setFont(this, txtHomeApp, TextUtils.CUTE_CARTOON);
-    }
-    private void setUpTwitterButton() {
+        txtHomeApp.setTypeface( TextUtils.getTypeface(this, TextUtils.FONT_CUTE_CARTOON));
+
+        //Set Twitter Login Button.
         btnLoginTwitter = (TwitterLoginButton) findViewById(R.id.btn_Login_Twiter);
         btnLoginTwitter.setCallback(new Callback<TwitterSession>() {
             @Override
             public void success(Result<TwitterSession> result) {
+                Log.i("LOG","success().");
                 Intent it = new Intent(getApplication().getBaseContext(), MainActivity.class);
                 startActivity(it);
             }
@@ -55,6 +52,7 @@ public class HomeActivity extends AppCompatActivity {
                 Log.i("LOG", "Falha ao autenticar usuário no Twitter.");
             }
         });
+
     }
 
     @Override

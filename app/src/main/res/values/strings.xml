@@ -3,4 +3,7 @@
     <string name="search_msg">Digite a busca</string>
     <string name="btn_search">Buscar</string>
     <string name="without_Internet">É necessário conexão com a internet para utilizar o aplicativo.</string>
+    <string name="failed_search">Nada sobre este assunto.</string>
+
+
 </resources>
