@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager viewPager;
 
-   // public static String POSITION = "POSITION";
+    public static String POSITION = "POSITION";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-/*
+
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -74,7 +74,6 @@ public class MainActivity extends AppCompatActivity {
         super.onRestoreInstanceState(savedInstanceState);
         viewPager.setCurrentItem(savedInstanceState.getInt(POSITION));
     }
-    */
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -100,8 +99,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        LastSearchDao.salvePrefs(this);
         super.onDestroy();
+        LastSearchDao.salvePrefs(this);
+
 
     }
 }

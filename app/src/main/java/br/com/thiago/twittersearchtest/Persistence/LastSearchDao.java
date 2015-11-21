@@ -24,20 +24,26 @@ public class LastSearchDao {
             Log.i("LOG", "Item removido, tamanho atual: " + lastSearchList.size());
         }
 
-        lastSearchList.add( search );
+        lastSearchList.add(search);
     }
 
     public static void loadPrefs( Context ctx){
         SharedPreferences prefs = ctx.getSharedPreferences(LAST_SEARCH, Context.MODE_PRIVATE);
-        Set<String> temp = prefs.getStringSet(LAST_SEARCH, new HashSet<String>());
-        lastSearchList.addAll(temp);
+        Set<String> temp = prefs.getStringSet(LAST_SEARCH, null);
+
+        if (temp != null){
+            lastSearchList.clear();
+            lastSearchList.addAll(temp);
+        }
         Log.i("LOG", "Retortando com " + lastSearchList.size());
     }
 
     public static void salvePrefs( Context ctx) {
-        Log.i("LOG", "Salvando com " + lastSearchList.size());
+        Log.i("LOG", "Salvando com total de " + lastSearchList.size());
         SharedPreferences.Editor ed = ctx.getSharedPreferences(LAST_SEARCH, Context.MODE_PRIVATE).edit();
-        ed.putStringSet(LAST_SEARCH, (Set<String>) lastSearchList);
+        ed.clear();
+        Set<String> set = (Set)lastSearchList;
+        ed.putStringSet(LAST_SEARCH, set);
         ed.commit();
     }
 
