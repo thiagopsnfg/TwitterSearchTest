@@ -1,7 +1,10 @@
 <resources>
     <string name="app_name">Buscar Tweets</string>
     <string name="search_msg">Digite a busca</string>
-    <string name="btn_search">Buscar</string>
+    <string name="tab_search">BUSCAS</string>
+    <string name="tab_last_search_msg">ULTIMAS BUSCAS</string>
+    <string name="tab_top_trends">TOP TRENDS</string>
+    <string name="btn_search">BUSCAR</string>
     <string name="without_Internet">É necessário conexão com a internet para utilizar o aplicativo.</string>
     <string name="failed_search">Nada sobre este assunto.</string>
 

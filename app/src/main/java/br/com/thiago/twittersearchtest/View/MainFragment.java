@@ -2,7 +2,6 @@ package br.com.thiago.twittersearchtest.View;
 
 import android.content.Context;
 import android.net.Uri;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,11 +10,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -29,6 +26,7 @@ import com.twitter.sdk.android.core.models.Tweet;
 
 import java.util.List;
 
+import br.com.thiago.twittersearchtest.Persistence.LastSearchDao;
 import br.com.thiago.twittersearchtest.R;
 import br.com.thiago.twittersearchtest.Utils.TextUtils;
 import br.com.thiago.twittersearchtest.Utils.TwitterUtils;
@@ -52,6 +50,7 @@ public class MainFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Log.i("LOG", "onCreateView do MainFragment");
         View view = inflater.inflate(R.layout.activity_main_root_body, container, false);
 
         //Set RecycleView
@@ -64,9 +63,6 @@ public class MainFragment extends Fragment {
         editTextSearch = (EditText) view.findViewById(R.id.et_Search);
         editTextSearch.setTypeface(TextUtils.getTypeface(context, TextUtils.FONT_CUTE_CARTOON));
 
-        TextView txtSearchMsg = (TextView) view.findViewById(R.id.txtSearchMsg);
-        txtSearchMsg.setTypeface( TextUtils.getTypeface(context,TextUtils.FONT_CUTE_CARTOON ));
-
         //Set Button for search
         Button btnSearch = (Button) view.findViewById(R.id.btnSearch);
         btnSearch.setTypeface( TextUtils.getTypeface(context, TextUtils.FONT_CUTE_CARTOON ));
@@ -76,6 +72,7 @@ public class MainFragment extends Fragment {
                 search = editTextSearch.getText().toString();
                 searchTweets(search);
                 TextUtils.hideKeyboard(context, editTextSearch);
+                LastSearchDao.insert( search );
             }
         });
 
@@ -98,9 +95,7 @@ public class MainFragment extends Fragment {
     }
 
 //----------------------------------------------------------------------------------------------------------------
-
-    public class ListTweetsAdapter extends RecyclerView.Adapter<ListTweetsAdapter.InnerViewHolder> {
-
+public class ListTweetsAdapter extends RecyclerView.Adapter<ListTweetsAdapter.InnerViewHolder> {
 
         public ListTweetsAdapter() {
             searchTweets(search);
@@ -111,7 +106,7 @@ public class MainFragment extends Fragment {
             Log.i("LOG", "onCreateViewHolder do ListTweetsAdapter.");
 
             LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-            View view = inflater.inflate(R.layout.activity_main_card, parent, false);
+            View view = inflater.inflate(R.layout.fragment_card_tweet, parent, false);
             InnerViewHolder holder = new InnerViewHolder(view);
 
             return holder;

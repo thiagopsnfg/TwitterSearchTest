@@ -1,32 +1,25 @@
 package br.com.thiago.twittersearchtest.View;
 
-import android.net.Uri;
-import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.v4.app.Fragment;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
-import com.facebook.drawee.view.SimpleDraweeView;
-import com.twitter.sdk.android.Twitter;
-import com.twitter.sdk.android.core.TwitterApiClient;
-import com.twitter.sdk.android.core.TwitterCore;
-import com.twitter.sdk.android.core.internal.TwitterApi;
 
+import br.com.thiago.twittersearchtest.Adapter.TabsAdapter;
+import br.com.thiago.twittersearchtest.Persistence.LastSearchDao;
 import br.com.thiago.twittersearchtest.R;
-import br.com.thiago.twittersearchtest.Utils.TwitterUtils;
 
 public class MainActivity extends AppCompatActivity {
 
-       private Fragment fragment;
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
 
-    private static final String FRAGMENT_TAG = "MainTag";
+   // public static String POSITION = "POSITION";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,17 +27,56 @@ public class MainActivity extends AppCompatActivity {
         Fresco.initialize(this);
         setContentView(R.layout.activity_main);
 
-        if(savedInstanceState != null){
-            fragment = getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG);
-        }
-        else{
-            fragment = new MainFragment();
-        }
+        setUpViewPager();
+        setUpTabLayout();
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.details_container, fragment, FRAGMENT_TAG).commit();
+        //Set the last searches
+        LastSearchDao.loadPrefs(this);
+
+
     }
 
-     @Override
+    private void setUpViewPager() {
+        Log.i("LOG", "setUpViewPager");
+        viewPager = (ViewPager) findViewById(R.id.viewPagerRoot);
+        TabsAdapter adapter = new TabsAdapter(getSupportFragmentManager(), this);
+
+        adapter.addFragment(new MainFragment(), getString(R.string.tab_search));
+        adapter.addFragment(new LastTweetsFragments(), getString(R.string.tab_last_search_msg));
+        adapter.addFragment( new SearchTrendTops(), getString(R.string.tab_top_trends));
+
+        viewPager.setAdapter(adapter);
+    }
+
+    private void setUpTabLayout(){
+        tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+       // tabLayout.setBackgroundColor( getResources().getColor(R.color.colorPrimaryDark));
+        tabLayout.setSelectedTabIndicatorColor( getResources().getColor(R.color.colorAccent));
+        tabLayout.setupWithViewPager(viewPager);
+
+       // tabLayout.getTabAt(0).setIcon(tabIcons[0]);
+       // tabLayout.getTabAt(1).setIcon(tabIcons[1]);
+       // tabLayout.getTabAt(2).setIcon(tabIcons[2]);
+    }
+
+
+
+/*
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(POSITION, tabLayout.getSelectedTabPosition());
+    }
+
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        viewPager.setCurrentItem(savedInstanceState.getInt(POSITION));
+    }
+    */
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -64,5 +96,12 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onDestroy() {
+        LastSearchDao.salvePrefs(this);
+        super.onDestroy();
+
     }
 }
