@@ -86,18 +86,18 @@
         <dex dex="E:\Dev_Mobile\studio_builder\TwitterSearchTest\TwitterSearchTest\app\build\intermediates\pre-dexed\debug\classes-2851b822e61a8a9f4d869f503f9850df59c6168d.jar" />
     </item>
     <item
-        jar="C:\Users\Thiago\.gradle\caches\modules-2\files-2.1\com.parse.bolts\bolts-android\1.1.4\129874135e6081269ace2312092031558865de12\bolts-android-1.1.4.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="129874135e6081269ace2312092031558865de12">
-        <dex dex="E:\Dev_Mobile\studio_builder\TwitterSearchTest\TwitterSearchTest\app\build\intermediates\pre-dexed\debug\bolts-android-1.1.4-9d7b34cae967652fe8a8372c16823b45a19a5308.jar" />
-    </item>
-    <item
         jar="E:\Dev_Mobile\studio_builder\TwitterSearchTest\TwitterSearchTest\app\build\intermediates\exploded-aar\com.digits.sdk.android\digits\1.9.1\jars\classes.jar"
         jumboMode="false"
         revision="23.0.1"
         sha1="b727e800debd202a5113d675f024751bc82b2cbf">
         <dex dex="E:\Dev_Mobile\studio_builder\TwitterSearchTest\TwitterSearchTest\app\build\intermediates\pre-dexed\debug\classes-167945be70fd949202e39ede19e7eeb738df2ef3.jar" />
+    </item>
+    <item
+        jar="C:\Users\Thiago\.gradle\caches\modules-2\files-2.1\com.parse.bolts\bolts-android\1.1.4\129874135e6081269ace2312092031558865de12\bolts-android-1.1.4.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="129874135e6081269ace2312092031558865de12">
+        <dex dex="E:\Dev_Mobile\studio_builder\TwitterSearchTest\TwitterSearchTest\app\build\intermediates\pre-dexed\debug\bolts-android-1.1.4-9d7b34cae967652fe8a8372c16823b45a19a5308.jar" />
     </item>
     <item
         jar="C:\Users\Thiago\.gradle\caches\modules-2\files-2.1\com.twitter\twitter-text\1.13.0\78415b95ae3184c5926d593feab64bfc0b73b2dd\twitter-text-1.13.0.jar"
@@ -170,18 +170,18 @@
         <dex dex="E:\Dev_Mobile\studio_builder\TwitterSearchTest\TwitterSearchTest\app\build\intermediates\pre-dexed\debug\classes-717d95e933eda670af367e9215e7090b40580364.jar" />
     </item>
     <item
-        jar="E:\Dev_Mobile\studio_builder\TwitterSearchTest\TwitterSearchTest\app\build\intermediates\exploded-aar\com.crashlytics.sdk.android\crashlytics-core\2.3.6\jars\classes.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="a318b9031a1d83f568495b239504a808d56bdbc1">
-        <dex dex="E:\Dev_Mobile\studio_builder\TwitterSearchTest\TwitterSearchTest\app\build\intermediates\pre-dexed\debug\classes-958af6a54187f7cf6b7bce861652b357ad9741a4.jar" />
-    </item>
-    <item
         jar="E:\Dev_Mobile\studio_builder\TwitterSearchTest\TwitterSearchTest\app\build\intermediates\exploded-aar\io.fabric.sdk.android\fabric\1.3.8\jars\classes.jar"
         jumboMode="false"
         revision="23.0.1"
         sha1="2fc97f9f17a0a0c5372fbfd2eab091601db69249">
         <dex dex="E:\Dev_Mobile\studio_builder\TwitterSearchTest\TwitterSearchTest\app\build\intermediates\pre-dexed\debug\classes-7d9ffa5d78ae914d2a232ccdf83c8893ae17e993.jar" />
+    </item>
+    <item
+        jar="E:\Dev_Mobile\studio_builder\TwitterSearchTest\TwitterSearchTest\app\build\intermediates\exploded-aar\com.crashlytics.sdk.android\crashlytics-core\2.3.6\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="a318b9031a1d83f568495b239504a808d56bdbc1">
+        <dex dex="E:\Dev_Mobile\studio_builder\TwitterSearchTest\TwitterSearchTest\app\build\intermediates\pre-dexed\debug\classes-958af6a54187f7cf6b7bce861652b357ad9741a4.jar" />
     </item>
     <item
         jar="E:\Dev_Mobile\studio_builder\TwitterSearchTest\TwitterSearchTest\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.1.1\jars\classes.jar"

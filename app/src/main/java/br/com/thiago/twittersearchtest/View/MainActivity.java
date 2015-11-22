@@ -32,8 +32,6 @@ public class MainActivity extends AppCompatActivity {
 
         //Set the last searches
         LastSearchDao.loadPrefs(this);
-
-
     }
 
     private void setUpViewPager() {
@@ -43,22 +41,22 @@ public class MainActivity extends AppCompatActivity {
 
         adapter.addFragment(new MainFragment(), getString(R.string.tab_search));
         adapter.addFragment(new LastTweetsFragments(), getString(R.string.tab_last_search_msg));
-        adapter.addFragment( new SearchTrendTops(), getString(R.string.tab_top_trends));
+        adapter.addFragment(new SearchTTFragment(), getString(R.string.tab_top_trends));
 
         viewPager.setAdapter(adapter);
     }
 
-    private void setUpTabLayout(){
+    private void setUpTabLayout() {
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
-       // tabLayout.setBackgroundColor( getResources().getColor(R.color.colorPrimaryDark));
-        tabLayout.setSelectedTabIndicatorColor( getResources().getColor(R.color.colorAccent));
+        tabLayout.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+        tabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.colorAccent));
         tabLayout.setupWithViewPager(viewPager);
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
-       // tabLayout.getTabAt(0).setIcon(tabIcons[0]);
-       // tabLayout.getTabAt(1).setIcon(tabIcons[1]);
-       // tabLayout.getTabAt(2).setIcon(tabIcons[2]);
+        if(tabLayout.getTabCount() > 3) {
+            tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+        }
     }
-
 
 
 
@@ -84,12 +82,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }

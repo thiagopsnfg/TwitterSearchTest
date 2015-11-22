@@ -16,7 +16,7 @@
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
                 <View
                     android:layout_width="match_parent"
@@ -42,9 +42,10 @@
                 app:layout_anchorGravity="bottom"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                app:tabGravity="fill"
+                app:tabGravity="center"
                 android:fitsSystemWindows="true"
-                app:tabMode="scrollable" />
+                app:tabMode="fixed"
+                android:fillViewport="true" />
 
         </android.support.design.widget.CollapsingToolbarLayout>
 

@@ -50,8 +50,7 @@ public class MainFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.i("LOG", "onCreateView do MainFragment");
-        View view = inflater.inflate(R.layout.activity_main_root_body, container, false);
+        View view = inflater.inflate(R.layout.fragment_main, container, false);
 
         //Set RecycleView
         recyclerView = (RecyclerView) view.findViewById(R.id.my_recycler_view);
@@ -65,14 +64,14 @@ public class MainFragment extends Fragment {
 
         //Set Button for search
         Button btnSearch = (Button) view.findViewById(R.id.btnSearch);
-        btnSearch.setTypeface( TextUtils.getTypeface(context, TextUtils.FONT_CUTE_CARTOON ));
+        btnSearch.setTypeface(TextUtils.getTypeface(context, TextUtils.FONT_CUTE_CARTOON));
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 search = editTextSearch.getText().toString();
                 searchTweets(search);
                 TextUtils.hideKeyboard(context, editTextSearch);
-                LastSearchDao.insert( search );
+                LastSearchDao.insert(search);
             }
         });
 
@@ -90,12 +89,13 @@ public class MainFragment extends Fragment {
             }
 
             @Override
-            public void failure(TwitterException exception) {}
+            public void failure(TwitterException exception) {
+            }
         });
     }
 
-//----------------------------------------------------------------------------------------------------------------
-public class ListTweetsAdapter extends RecyclerView.Adapter<ListTweetsAdapter.InnerViewHolder> {
+    //----------------------------------------------------------------------------------------------------------------
+    public class ListTweetsAdapter extends RecyclerView.Adapter<ListTweetsAdapter.InnerViewHolder> {
 
         public ListTweetsAdapter() {
             searchTweets(search);
@@ -103,10 +103,8 @@ public class ListTweetsAdapter extends RecyclerView.Adapter<ListTweetsAdapter.In
 
         @Override
         public InnerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            Log.i("LOG", "onCreateViewHolder do ListTweetsAdapter.");
-
             LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-            View view = inflater.inflate(R.layout.fragment_card_tweet, parent, false);
+            View view = inflater.inflate(R.layout.fragment_main_card, parent, false);
             InnerViewHolder holder = new InnerViewHolder(view);
 
             return holder;
@@ -114,8 +112,6 @@ public class ListTweetsAdapter extends RecyclerView.Adapter<ListTweetsAdapter.In
 
         @Override
         public void onBindViewHolder(InnerViewHolder holder, int position) {
-            Log.i("LOG", "onBindViewHolder do ListTweetsAdapter.");
-
             Tweet tweet = tweets.get(position);
             holder.nameOfUser.setText(tweet.user.name);
             holder.txtOfTweet.setText(tweet.text);
@@ -137,7 +133,6 @@ public class ListTweetsAdapter extends RecyclerView.Adapter<ListTweetsAdapter.In
 
             public InnerViewHolder(View itemView) {
                 super(itemView);
-                Log.i("LOG", "construtor do InnerViewHolder.");
 
                 imgUser = (SimpleDraweeView) itemView.findViewById(R.id.imgUser);
                 nameOfUser = (TextView) itemView.findViewById(R.id.txtName);

@@ -20,7 +20,6 @@ public class TabsAdapter extends android.support.v4.app.FragmentPagerAdapter {
     final int PAGE_COUNT = 3;
     private final Context context;
 
-
     public TabsAdapter(FragmentManager fm, Context ctx) {
         super(fm);
         this.context = ctx;
@@ -30,7 +29,7 @@ public class TabsAdapter extends android.support.v4.app.FragmentPagerAdapter {
         mFragmentList.add(fragment);
         mFragmentTitleList.add(title);
 
-        Log.i("LOG","addFragment :" + mFragmentList.size());
+        Log.i("LOG", "addFragment :" + mFragmentList.size());
     }
 
     @Override

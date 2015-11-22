@@ -11,10 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.twitter.sdk.android.core.models.Tweet;
-
 import java.util.List;
-import java.util.Set;
 
 import br.com.thiago.twittersearchtest.Persistence.LastSearchDao;
 import br.com.thiago.twittersearchtest.R;
@@ -39,7 +36,7 @@ public class LastTweetsFragments extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_last_tweet, container, false);
+        View view = inflater.inflate(R.layout.fragment_last_search, container, false);
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.rvLastSearches);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
@@ -47,7 +44,6 @@ public class LastTweetsFragments extends Fragment {
         mRecyclerView.setAdapter(adapter);
 
         return view;
-
     }
 
 
@@ -57,7 +53,6 @@ public class LastTweetsFragments extends Fragment {
 
         List<String> lastSearches;
 
-
         public LastTweetsAdapter() {
             this.lastSearches = LastSearchDao.getLastSearchList();
         }
@@ -66,7 +61,7 @@ public class LastTweetsFragments extends Fragment {
         public InnerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
             LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-            View view = inflater.inflate(R.layout.fragment_card_last_search, parent, false);
+            View view = inflater.inflate(R.layout.fragment_last_search_card, parent, false);
 
             InnerViewHolder holder = new InnerViewHolder(view);
 
@@ -89,12 +84,12 @@ public class LastTweetsFragments extends Fragment {
         public class InnerViewHolder extends RecyclerView.ViewHolder {
             TextView mTextView;
 
-            public InnerViewHolder(View itemView) {
+            public InnerViewHolder(final View itemView) {
                 super(itemView);
                 mTextView = (TextView) itemView.findViewById(R.id.txtLastSearch);
                 mTextView.setTypeface(TextUtils.getTypeface(itemView.getContext(), TextUtils.FONT_CUTE_CARTOON));
-
             }
+
         }
     }
 }

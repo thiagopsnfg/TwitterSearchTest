@@ -7,6 +7,8 @@
     <string name="btn_search">BUSCAR</string>
     <string name="without_Internet">É necessário conexão com a internet para utilizar o aplicativo.</string>
     <string name="failed_search">Nada sobre este assunto.</string>
+    <string name="fail">Falha ao realizar a consulta.</string>
+
 
 
 </resources>

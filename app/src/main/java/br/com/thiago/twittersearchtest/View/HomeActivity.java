@@ -31,25 +31,19 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void init() {
-        //Set Welcome.
-        Log.i("LOG", "init()");
-
         TextView txtHomeApp = (TextView) findViewById(R.id.txtHomeApp);
-        txtHomeApp.setTypeface( TextUtils.getTypeface(this, TextUtils.FONT_CUTE_CARTOON));
+        txtHomeApp.setTypeface(TextUtils.getTypeface(this, TextUtils.FONT_CUTE_CARTOON));
 
-        //Set Twitter Login Button.
         btnLoginTwitter = (TwitterLoginButton) findViewById(R.id.btn_Login_Twiter);
         btnLoginTwitter.setCallback(new Callback<TwitterSession>() {
             @Override
             public void success(Result<TwitterSession> result) {
-                Log.i("LOG","success().");
                 Intent it = new Intent(getApplication().getBaseContext(), MainActivity.class);
                 startActivity(it);
             }
 
             @Override
             public void failure(TwitterException e) {
-                Log.i("LOG", "Falha ao autenticar usuário no Twitter.");
             }
         });
 
@@ -58,7 +52,7 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onPostResume() {
         super.onPostResume();
-        if( !HTTPUtils.isNetworkAvailable(this)){
+        if (!HTTPUtils.isNetworkAvailable(this)) {
             btnLoginTwitter.setEnabled(false);
             Toast.makeText(this, R.string.without_Internet, Toast.LENGTH_SHORT).show();
             return;
@@ -70,7 +64,6 @@ public class HomeActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        // Pass the activity result to the login button.
         btnLoginTwitter.onActivityResult(requestCode, resultCode, data);
     }
 }
