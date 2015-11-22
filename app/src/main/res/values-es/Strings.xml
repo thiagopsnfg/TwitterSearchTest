@@ -1,4 +1,11 @@
 <resources>
-    <string name="app_name">TwitterSearchTest</string>
-    <string name="action_settings">Settings</string>
+    <string name="app_name">Buscar la Tweets</string>
+    <string name="search_msg">Introduce la búsqueda</string>
+    <string name="tab_search">BUSCAS</string>
+    <string name="tab_last_search_msg">últimas búsquedas</string>
+    <string name="tab_top_trends">TEMAS DE TENDENCIA</string>
+    <string name="btn_search">BUSCAR</string>
+    <string name="without_Internet">Se necesita conexión a Internet para utilizar la aplicación.</string>
+    <string name="failed_search">Nada en este tema.</string>
+    <string name="fail">No se pudo realizar la consulta.</string>
 </resources>

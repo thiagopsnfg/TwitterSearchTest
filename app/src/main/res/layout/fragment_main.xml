@@ -28,13 +28,11 @@
         android:textSize="35sp"
         android:onClick="searchTweets"/>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/my_recycler_view"
-        android:scrollbars="vertical"
+    <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"/>
+        android:id="@+id/searchMainList"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="5dp" />
 
 </LinearLayout>

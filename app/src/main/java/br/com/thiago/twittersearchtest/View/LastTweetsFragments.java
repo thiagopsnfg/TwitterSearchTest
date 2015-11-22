@@ -25,13 +25,13 @@ public class LastTweetsFragments extends Fragment {
     private RecyclerView mRecyclerView;
     private Context mContext;
     private LastTweetsAdapter adapter;
+    protected List<String> lastSearches;
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = getActivity().getApplicationContext();
-
     }
 
     @Override
@@ -46,16 +46,34 @@ public class LastTweetsFragments extends Fragment {
         return view;
     }
 
+    private void atualiza(){
+        lastSearches = LastSearchDao.getLastSearchList();
 
-//----------------------------------------------------------------------------------------------------------------
+        if(lastSearches != null)
+             adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        atualiza();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        LastSearchDao.salvePrefs(mContext);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        LastSearchDao.salvePrefs(mContext);
+    }
+
+    //----------------------------------------------------------------------------------------------------------------
 
     public class LastTweetsAdapter extends RecyclerView.Adapter<LastTweetsAdapter.InnerViewHolder> {
-
-        List<String> lastSearches;
-
-        public LastTweetsAdapter() {
-            this.lastSearches = LastSearchDao.getLastSearchList();
-        }
 
         @Override
         public InnerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

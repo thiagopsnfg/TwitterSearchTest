@@ -1,4 +1,11 @@
 <resources>
-    <string name="app_name">TwitterSearchTest</string>
+    <string name="app_name">Twitter Search</string>
     <string name="action_settings">Settings</string>
+    <string name="tab_search">SEARCH</string>
+    <string name="tab_last_search_msg">LATEST SEARCHES</string>
+    <string name="tab_top_trends">TOPICS TRENDS</string>
+    <string name="btn_search">SEARCH</string>
+    <string name="without_Internet">It needs internet connection to use the application.</string>
+    <string name="failed_search">Nothing about this subject.</string>
+    <string name="fail">Failed to perform the query.</string>
 </resources>

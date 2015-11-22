@@ -37,7 +37,6 @@ public class SearchTTFragment extends Fragment {
     private TweetViewAdapter adapter;
     private static final String SEARCH_RESULT_TYPE = "recent";
     private static final int SEARCH_COUNT = 20;
-    private ProgressBar progressBar;
     private SearchService service;
     ListView SearchList;
 

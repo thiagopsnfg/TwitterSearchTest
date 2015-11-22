@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -18,36 +19,33 @@ public class LastSearchDao {
 
     private static final String LAST_SEARCH = "lastSeach";
 
-    public static void insert(String search){
-        if( lastSearchList.size() > 5) {
-            lastSearchList.remove(0);
-            Log.i("LOG", "Item removido, tamanho atual: " + lastSearchList.size());
+    public static void insert(String search) {
+        if (lastSearchList.size() > 50) {
+            while (lastSearchList.size() > 40)
+                lastSearchList.remove(0);
         }
-
         lastSearchList.add(search);
     }
 
-    public static void loadPrefs( Context ctx){
+    public static void loadPrefs(Context ctx) {
         SharedPreferences prefs = ctx.getSharedPreferences(LAST_SEARCH, Context.MODE_PRIVATE);
         Set<String> temp = prefs.getStringSet(LAST_SEARCH, null);
 
-        if (temp != null){
+        if (temp != null) {
             lastSearchList.clear();
             lastSearchList.addAll(temp);
         }
-        Log.i("LOG", "Retortando com " + lastSearchList.size());
     }
 
-    public static void salvePrefs( Context ctx) {
-        Log.i("LOG", "Salvando com total de " + lastSearchList.size());
+    public static void salvePrefs(Context ctx) {
         SharedPreferences.Editor ed = ctx.getSharedPreferences(LAST_SEARCH, Context.MODE_PRIVATE).edit();
         ed.clear();
-        Set<String> set = (Set)lastSearchList;
+        Set<String> set = new HashSet<>(lastSearchList);
         ed.putStringSet(LAST_SEARCH, set);
         ed.commit();
     }
 
-    public static List<String> getLastSearchList(){
+    public static List<String> getLastSearchList() {
         return lastSearchList;
     }
 

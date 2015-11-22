@@ -1,42 +1,41 @@
 package br.com.thiago.twittersearchtest.View;
 
 import android.content.Context;
-import android.net.Uri;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.ListView;
+import android.widget.Toast;
 
-import com.facebook.drawee.backends.pipeline.Fresco;
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.twitter.sdk.android.Twitter;
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.Result;
-import com.twitter.sdk.android.core.TwitterApiClient;
-import com.twitter.sdk.android.core.TwitterCore;
 import com.twitter.sdk.android.core.TwitterException;
 import com.twitter.sdk.android.core.models.Search;
 import com.twitter.sdk.android.core.models.Tweet;
+import com.twitter.sdk.android.core.services.SearchService;
+import com.twitter.sdk.android.tweetui.TweetViewAdapter;
 
 import java.util.List;
 
 import br.com.thiago.twittersearchtest.Persistence.LastSearchDao;
 import br.com.thiago.twittersearchtest.R;
 import br.com.thiago.twittersearchtest.Utils.TextUtils;
-import br.com.thiago.twittersearchtest.Utils.TwitterUtils;
 
 public class MainFragment extends Fragment {
 
     private EditText editTextSearch;
     private static List<Tweet> tweets;
-    private RecyclerView recyclerView;
-    private ListTweetsAdapter listTweetsAdapter;
+    private TweetViewAdapter adapter;
+    private static final String SEARCH_RESULT_TYPE = "recent";
+    private static final int SEARCH_COUNT = 20;
+    private SearchService service;
+    ListView SearchList;
     private Context context;
     private String search;
 
@@ -45,22 +44,19 @@ public class MainFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = getActivity().getApplicationContext();
-        Fresco.initialize(context);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
 
-        //Set RecycleView
-        recyclerView = (RecyclerView) view.findViewById(R.id.my_recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(context));
-        listTweetsAdapter = new ListTweetsAdapter();
-        recyclerView.setAdapter(listTweetsAdapter);
-
         //Set Text for search
         editTextSearch = (EditText) view.findViewById(R.id.et_Search);
         editTextSearch.setTypeface(TextUtils.getTypeface(context, TextUtils.FONT_CUTE_CARTOON));
+
+        adapter = new TweetViewAdapter(context);
+        SearchList = (ListView) view.findViewById(R.id.searchMainList);
+        SearchList.setAdapter(adapter);
 
         //Set Button for search
         Button btnSearch = (Button) view.findViewById(R.id.btnSearch);
@@ -79,66 +75,24 @@ public class MainFragment extends Fragment {
     }
 
     public void searchTweets(String search) {
-        TwitterApiClient twitterApiClient = TwitterCore.getInstance().getApiClient(TwitterUtils.getSession());
-        twitterApiClient.getSearchService().tweets(search, null, null, null, null, 25, null, null, null, true, new Callback<Search>() {
+        service = Twitter.getApiClient().getSearchService();
+        service.tweets(search, null, null, null, SEARCH_RESULT_TYPE, SEARCH_COUNT, null, null, null, true, new Callback<Search>() {
 
-            @Override
-            public void success(Result<Search> result) {
-                tweets = result.data.tweets;
-                listTweetsAdapter.notifyDataSetChanged();
-            }
+                    @Override
+                    public void success(Result<Search> searchResult) {
+                        List<Tweet> tweets = searchResult.data.tweets;
+                        adapter.getTweets().clear();
+                        adapter.getTweets().addAll(tweets);
+                        adapter.notifyDataSetChanged();
+                        System.out.println("adapter.notifyDataSetChanged() ");
+                        Log.i("LOG","adapter.notifyDataSetChanged() ");
+                    }
 
-            @Override
-            public void failure(TwitterException exception) {
-            }
-        });
+                    @Override
+                    public void failure(TwitterException error) {
+                        Toast.makeText(context, getString(R.string.fail), Toast.LENGTH_SHORT).show();
+                    }
+                }
+        );
     }
-
-    //----------------------------------------------------------------------------------------------------------------
-    public class ListTweetsAdapter extends RecyclerView.Adapter<ListTweetsAdapter.InnerViewHolder> {
-
-        public ListTweetsAdapter() {
-            searchTweets(search);
-        }
-
-        @Override
-        public InnerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-            View view = inflater.inflate(R.layout.fragment_main_card, parent, false);
-            InnerViewHolder holder = new InnerViewHolder(view);
-
-            return holder;
-        }
-
-        @Override
-        public void onBindViewHolder(InnerViewHolder holder, int position) {
-            Tweet tweet = tweets.get(position);
-            holder.nameOfUser.setText(tweet.user.name);
-            holder.txtOfTweet.setText(tweet.text);
-
-            Uri uri = Uri.parse(tweet.user.profileImageUrl);
-            holder.imgUser.setImageURI(uri);
-        }
-
-        @Override
-        public int getItemCount() {
-            return tweets != null ? tweets.size() : 0;
-        }
-
-        public class InnerViewHolder extends RecyclerView.ViewHolder {
-
-            public SimpleDraweeView imgUser;
-            public TextView txtOfTweet;
-            public TextView nameOfUser;
-
-            public InnerViewHolder(View itemView) {
-                super(itemView);
-
-                imgUser = (SimpleDraweeView) itemView.findViewById(R.id.imgUser);
-                nameOfUser = (TextView) itemView.findViewById(R.id.txtName);
-                txtOfTweet = (TextView) itemView.findViewById(R.id.txtTweet);
-            }
-        }
-    }
-
 }

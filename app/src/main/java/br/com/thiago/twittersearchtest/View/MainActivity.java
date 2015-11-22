@@ -1,15 +1,12 @@
 package br.com.thiago.twittersearchtest.View;
 
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-
-import com.facebook.drawee.backends.pipeline.Fresco;
-
 import br.com.thiago.twittersearchtest.Adapter.TabsAdapter;
 import br.com.thiago.twittersearchtest.Persistence.LastSearchDao;
 import br.com.thiago.twittersearchtest.R;
@@ -24,7 +21,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Fresco.initialize(this);
         setContentView(R.layout.activity_main);
 
         setUpViewPager();
@@ -48,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void setUpTabLayout() {
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
-        tabLayout.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+        tabLayout.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
         tabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.colorAccent));
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
